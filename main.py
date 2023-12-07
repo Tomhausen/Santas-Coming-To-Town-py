@@ -13,12 +13,12 @@ santa.start_effect(effects.trail)
 # variables
 speed_up = 3
 slow_down = 0.99
-presents_to_deliver = 30 # 
+presents_to_deliver = 30
 
 # setup
 info.set_life(3)
 effects.blizzard.start_screen_effect()
-info.start_countdown(120) # 
+info.start_countdown(120)
 
 # backgrounds
 scroller.set_layer_image(0, assets.image("background"))
@@ -29,11 +29,10 @@ scroller.scroll_background_with_speed(-30, 0, 1)
 scroller.scroll_background_with_speed(-35, 0, 2)
 
 # text
-present_text = textsprite.create(str(presents_to_deliver), 1, 3) # 
-present_text.scale = 1 # 
-present_text.right = 160 # 
-present_text.bottom = 120 # 
-present_text.z = 10 #
+present_text = textsprite.create(str(presents_to_deliver), 1, 3)
+present_text.right = 160
+present_text.bottom = 120
+present_text.z = 10
  
 def drop_present(): #
     if len(sprites.all_of_kind(SpriteKind.projectile)) < 1:
@@ -48,12 +47,12 @@ def hit_bird(santa, bird):
     bird.destroy()
 sprites.on_overlap(SpriteKind.player, SpriteKind.enemy, hit_bird)
 
-def present_lands(present, chimney): # 
-    global presents_to_deliver #
-    presents_to_deliver -= 1 # 
-    present_text.set_text(str(presents_to_deliver)) # 
-    if presents_to_deliver < 1: #
-        game.over(True) #
+def present_lands(present, chimney):
+    global presents_to_deliver
+    presents_to_deliver -= 1 
+    present_text.set_text(str(presents_to_deliver)) 
+    if presents_to_deliver < 1:
+        game.over(True)
     info.change_score_by(1000)
     present.destroy()
 sprites.on_overlap(SpriteKind.projectile, SpriteKind.chimney, present_lands)

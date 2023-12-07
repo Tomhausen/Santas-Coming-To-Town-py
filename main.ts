@@ -13,12 +13,10 @@ santa.startEffect(effects.trail)
 let speed_up = 3
 let slow_down = 0.99
 let presents_to_deliver = 30
-//  
 //  setup
 info.setLife(3)
 effects.blizzard.startScreenEffect()
 info.startCountdown(120)
-//  
 //  backgrounds
 scroller.setLayerImage(0, assets.image`background`)
 scroller.setLayerImage(1, assets.image`houses back`)
@@ -28,15 +26,9 @@ scroller.scrollBackgroundWithSpeed(-30, 0, 1)
 scroller.scrollBackgroundWithSpeed(-35, 0, 2)
 //  text
 let present_text = textsprite.create("" + presents_to_deliver, 1, 3)
-//  
-present_text.scale = 1
-//  
 present_text.right = 160
-//  
 present_text.bottom = 120
-//  
 present_text.z = 10
-// 
 controller.A.onEvent(ControllerButtonEvent.Pressed, function drop_present() {
     let present: Sprite;
     // 
@@ -53,19 +45,13 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function hit_bird(santa: 
     bird.destroy()
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.chimney, function present_lands(present: Sprite, chimney: Sprite) {
-    //  
     
-    // 
     presents_to_deliver -= 1
-    //  
     present_text.setText("" + presents_to_deliver)
-    //  
     if (presents_to_deliver < 1) {
-        // 
         game.over(true)
     }
     
-    // 
     info.changeScoreBy(1000)
     present.destroy()
 })
