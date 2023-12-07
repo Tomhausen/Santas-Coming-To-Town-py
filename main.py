@@ -13,12 +13,12 @@ santa.start_effect(effects.trail)
 # variables
 speed_up = 3
 slow_down = 0.99
-presents_to_deliver = 30
+presents_to_deliver = 30 # 
 
 # setup
 info.set_life(3)
 effects.blizzard.start_screen_effect()
-info.start_countdown(120)
+info.start_countdown(120) # 
 
 # backgrounds
 scroller.set_layer_image(0, assets.image("background"))
@@ -29,12 +29,12 @@ scroller.scroll_background_with_speed(-30, 0, 1)
 scroller.scroll_background_with_speed(-35, 0, 2)
 
 # text
-present_text = textsprite.create(str(presents_to_deliver), 1, 3)
-present_text.scale = 1
-present_text.right = 160
-present_text.bottom = 120
-present_text.z = 10
-
+present_text = textsprite.create(str(presents_to_deliver), 1, 3) # 
+present_text.scale = 1 # 
+present_text.right = 160 # 
+present_text.bottom = 120 # 
+present_text.z = 10 #
+ 
 def drop_present(): #
     if len(sprites.all_of_kind(SpriteKind.projectile)) < 1:
         present = sprites.create(assets.image("present"), SpriteKind.projectile)
@@ -42,14 +42,6 @@ def drop_present(): #
         present.vy = santa.vy
         present.set_flag(SpriteFlag.AUTO_DESTROY, True)
 controller.A.on_event(ControllerButtonEvent.PRESSED, drop_present)
-
-def spawn_chimney(): 
-    chimney = sprites.create(assets.image("chimney"), SpriteKind.chimney)
-    chimney.left = 159
-    chimney.bottom = 120
-    chimney.vx = -40
-    timer.after(randint(1000, 3000), spawn_chimney)
-timer.after(randint(1000, 3000), spawn_chimney)
 
 def hit_bird(santa, bird):
     info.change_life_by(-1)
@@ -76,6 +68,14 @@ def present_destroyed(present): #
         info.change_score_by(-1500)
 sprites.on_destroyed(SpriteKind.projectile, present_destroyed)
 
+def spawn_chimney():
+    chimney = sprites.create(assets.image("chimney"), SpriteKind.chimney)
+    chimney.left = 159
+    chimney.bottom = 120
+    chimney.vx = -40
+    timer.after(randint(1000, 3000), spawn_chimney)
+timer.after(randint(1000, 3000), spawn_chimney)
+
 def spawn_bird():
     bird = sprites.create(assets.image("bird"), SpriteKind.enemy)
     animation.run_image_animation(bird, assets.animation("bird anim"), 75, True)
@@ -83,10 +83,6 @@ def spawn_bird():
     bird.y = randint(10, 110)
     bird.vx = -75
 game.on_update_interval(1500, spawn_bird)
-
-def presents_fall(): # 
-    for present in sprites.all_of_kind(SpriteKind.projectile):
-        present.vy += 3
 
 def move():
     if controller.up.is_pressed():
@@ -96,7 +92,8 @@ def move():
     santa.vy *= slow_down
 
 def tick():
-    presents_fall() # 
+    for present in sprites.all_of_kind(SpriteKind.projectile):
+        present.vy += 3    
     move()
     info.change_score_by(1)
 game.on_update(tick)
